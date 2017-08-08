@@ -28,9 +28,23 @@ public class UserEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long userId;
 	private String empId;
+	private String username;
 	private String name;
 	private String password;
-	@OneToMany(mappedBy="userEntity",targetEntity=LeaveApplicationEntity.class,cascade=CascadeType.ALL)
+	private String role;
+	@OneToMany(mappedBy = "userEntity", targetEntity = LeaveApplicationEntity.class, cascade = CascadeType.ALL)
 	private List<LeaveApplicationEntity> leaveApplicationEntities = new ArrayList<LeaveApplicationEntity>();
+
+	public UserEntity(String empId, String name, String username, String password, String role) {
+		this.empId = empId;
+		this.name = name;
+		this.username = username;
+		this.password = password;
+		this.role = role;
+	}
+
+	public UserEntity(Long userId) {
+		this.userId = userId;
+	}
 
 }

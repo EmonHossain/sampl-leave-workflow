@@ -34,7 +34,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		else if (new BCryptPasswordEncoder().matches(password, user.getPassword())) {
 
 			List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-			authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+			authorities.add(new SimpleGrantedAuthority(user.getRole()));
 
 			return new UsernamePasswordAuthenticationToken(user, authentication, authorities);
 
