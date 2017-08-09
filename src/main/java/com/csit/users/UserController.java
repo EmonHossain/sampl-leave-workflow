@@ -70,6 +70,9 @@ public class UserController {
 				model.addAttribute("name", user.getName());
 			List<Leave> leaves = workflowService.getLeaveApplications(principal.getName());
 			model.addAttribute("leaves", leaves);
+			
+			List<LeaveApplicationEntity> leaveApps = workflowService.getApplicationByStatus(principal.getName());
+			model.addAttribute("apps", leaveApps);
 		} catch (Exception ex) {
 			logger.debug(ex.getMessage());
 			ex.printStackTrace();
@@ -105,6 +108,26 @@ public class UserController {
 	
 	@GetMapping(value="/approve")
 	public String doApprove(@RequestParam(name="pi",required=true)String proId,Principal principal){
+		workflowService.completeTask(proId, principal.getName());
+		return "redirect:/home";
+	}
+	@GetMapping(value="/reject")
+	public String doReject(@RequestParam(name="pi",required=true)String proId,Principal principal){
+		LeaveApplicationEntity application = workflowService.getApplicationByProId(proId);
+		workflowService.rejectApplication(proId);
+		return "redirect:/home";
+	}
+	@GetMapping(value="/resubmit")
+	public String doReSubmit(@RequestParam(name="pi",required=true)String proId,Principal principal){
+		LeaveApplicationEntity application = workflowService.getApplicationByProId(proId);
+		workflowService.applicationResubmit(proId, principal.getName(),application.getUserEntity().getUsername());
+		
+		application.setStatus("resubmit");
+		workflowService.updateLeaveApplication(application);
+		return "redirect:/home";
+	}
+	@GetMapping(value="/recommend")
+	public String doRecommend(@RequestParam(name="pi",required=true)String proId,Principal principal){
 		workflowService.completeTask(proId, principal.getName());
 		return "redirect:/home";
 	}

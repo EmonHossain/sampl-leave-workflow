@@ -9,6 +9,10 @@
 	<form th:action="@{/apply}" method="post">
 		<label>Reason to apply :</label>
 		<textarea rows="5" cols="25" name="description"></textarea><br />
+		<label>Date From</label>
+		<input type="text" name="dateFrom"/>
+		<label>Date To</label>
+		<input type="text" name="dateTo"/>
 		<input type="submit" value="Apply"/>
 	</form>
 

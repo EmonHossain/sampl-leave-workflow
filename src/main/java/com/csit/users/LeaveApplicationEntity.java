@@ -27,6 +27,8 @@ public class LeaveApplicationEntity {
 	private String description;
 	private String status;
 	private String proId;
+	private String dateFrom;
+	private String dateTo;
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "userId")
 	private UserEntity userEntity;

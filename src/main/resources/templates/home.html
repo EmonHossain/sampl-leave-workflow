@@ -19,7 +19,24 @@
 				<td th:text="${l.empName}"></td>
 				<td th:text="${l.empId}"></td>
 				<td th:text="${l.reason}"></td>
+				<td><a th:href="@{/recommend(pi=${l.proId})}">recommend</a></td>
+				<td><a th:href="@{/reject(pi=${l.proId})}">reject</a></td>
+				<td><a th:href="@{/resubmit(pi=${l.proId})}">resubmit</a></td>
 				<td><a th:href="@{/approve(pi=${l.proId})}">approve</a></td>
+			</tr>
+		</table>
+	</div>
+	
+	<h3>Status</h3>
+	<div th:if="${apps!=null}">
+		<table border="1">
+			<thead><tr>
+				<td>Reason</td>
+				<td>Status</td>
+			</tr></thead>
+			<tr th:each="a : ${apps}">
+				<td th:text="${a.description}"></td>
+				<td th:text="${a.status}"></td>
 			</tr>
 		</table>
 	</div>

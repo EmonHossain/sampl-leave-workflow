@@ -68,21 +68,43 @@ public class UserDao {
 
 	@SuppressWarnings("unchecked")
 	public List<Object[]> findAllAssignedApplication(List<String> proIds) {
-		logger.debug("task size : "+String.valueOf(proIds.size()));
+		logger.debug("task size : " + String.valueOf(proIds.size()));
 		List<Object[]> objs = new ArrayList<Object[]>();
-		for(String id : proIds){
+		for (String id : proIds) {
 			Criteria criteria = getSession().createCriteria(LeaveApplicationEntity.class, "l");
 			criteria.createAlias("l.userEntity", "u", org.hibernate.sql.JoinType.INNER_JOIN);
-			criteria.setProjection(
-					Projections.projectionList().add(Projections.property("u.name")).add(Projections.property("u.empId"))
-							.add(Projections.property("l.proId")).add(Projections.property("l.description")));
+			criteria.setProjection(Projections.projectionList().add(Projections.property("u.name"))
+					.add(Projections.property("u.empId")).add(Projections.property("l.proId"))
+					.add(Projections.property("l.description")));
 			criteria.add(Restrictions.eq("l.proId", id));
-			Object[] obj = (Object[])criteria.uniqueResult();
+			Object[] obj = (Object[]) criteria.uniqueResult();
 			objs.add(obj);
 		}
-		
-		//List<Object[]> objs = criteria.list();
+
+		// List<Object[]> objs = criteria.list();
 		return objs;
+	}
+	
+	public LeaveApplicationEntity findLeaveApplicationByProId(String proId) {
+		Criteria criteria = getSession().createCriteria(LeaveApplicationEntity.class);
+		criteria.add(Restrictions.eq("proId", proId));
+		LeaveApplicationEntity l =(LeaveApplicationEntity) criteria.uniqueResult();
+		l.getUserEntity().getUsername();
+		return l;
+	}
+
+	public void updateApplication(LeaveApplicationEntity application) {
+		getSession().update(application);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<LeaveApplicationEntity> findAppByStatus(String name) {
+		Criteria criteria = getSession().createCriteria(LeaveApplicationEntity.class, "l");
+		criteria.createAlias("l.userEntity", "u", JoinType.INNER_JOIN);
+		criteria.add(Restrictions.eq("u.username", name));
+		criteria.add(Restrictions.eq("l.status", "resubmit"));
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		return criteria.list();
 	}
 
 }
