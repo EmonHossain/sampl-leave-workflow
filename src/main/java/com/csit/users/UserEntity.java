@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,7 +33,7 @@ public class UserEntity {
 	private String name;
 	private String password;
 	private String role;
-	@OneToMany(mappedBy = "userEntity", targetEntity = LeaveApplicationEntity.class, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "userEntity", targetEntity = LeaveApplicationEntity.class, cascade = CascadeType.ALL,fetch=FetchType.EAGER)
 	private List<LeaveApplicationEntity> leaveApplicationEntities = new ArrayList<LeaveApplicationEntity>();
 
 	public UserEntity(String empId, String name, String username, String password, String role) {

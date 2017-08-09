@@ -27,7 +27,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
 		String username = authentication.getName();
 		String password = authentication.getCredentials().toString();
-		UserEntity user = userDao.getUserByUsername(username);
+		UserEntity user = userDao.findUserByUsername(username);
 
 		if (user == null)
 			return null;
@@ -36,7 +36,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 			List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 			authorities.add(new SimpleGrantedAuthority(user.getRole()));
 
-			return new UsernamePasswordAuthenticationToken(user, authentication, authorities);
+			return new UsernamePasswordAuthenticationToken(user.getUsername(), null, authorities);
 
 		}
 

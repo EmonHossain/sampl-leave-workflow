@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1"></meta>
+<title>Insert title here</title>
+</head>
+<body>
+
+	<form th:action="@{/apply}" method="post">
+		<label>Reason to apply :</label>
+		<textarea rows="5" cols="25" name="description"></textarea><br />
+		<input type="submit" value="Apply"/>
+	</form>
+
+</body>
+</html>

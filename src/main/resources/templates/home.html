@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1"></meta>
+<title>Insert title here</title>
+</head>
+<body>
+	Welcome <p th:text="${name}"></p>
+	To write a new leave application click <a th:href="@{/leave-form}">here</a>
+	<div th:if="${leaves!=null}">
+		<table border="1">
+			<thead><tr>
+				<td>Employee Name</td>
+				<td>Employee ID</td>
+				<td>Leave Reason</td>
+				<td>Decision</td>
+			</tr></thead>
+			<tr th:each="l : ${leaves}">
+				<td th:text="${l.empName}"></td>
+				<td th:text="${l.empId}"></td>
+				<td th:text="${l.reason}"></td>
+				<td><a th:href="@{/approve(pi=${l.proId})}">approve</a></td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>

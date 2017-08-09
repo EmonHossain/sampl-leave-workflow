@@ -25,6 +25,8 @@ public class LeaveApplicationEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long leaveId;
 	private String description;
+	private String status;
+	private String proId;
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "userId")
 	private UserEntity userEntity;
